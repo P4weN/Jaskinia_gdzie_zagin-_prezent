@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>Stara Jaskinia</title>
+<link rel="shortcut icon" href="ziomek.png">
+<link rel="stylesheet" href="style.css">   
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- MENU -->
+<div id="menu" class="screen">
+    <h1 class="W">Witaj w jaskini zaginionych prezentów!</h1>
+    <p>Kliknij przycisk <b>start</b> by zacząć szukać!</p>
+    <button onclick="pokazInstrukcje()">START</button>
+</div>
+
+<!-- INSTRUKCJA -->
+<div id="instrukcja" class="screen" style="display:none;">
+    <h1 class="W">Instrukcja</h1>
+    <p>Twoim zadaniem jest odszyfrowanie zaginionego hasła.<br>Odszyfrowanie hasła polega na klikaniu w pojawiające się 🔥.<br>Każde zdobyte 🔥 to +10% w postępie.</p>
+    <h2><b>UWAGA!</b></h2>
+    <p>Gra wraz z postępem robi się szybsza. Powodzenia!</p>
+    <button onclick="rozpocznijOdliczanie()">OK</button>
+</div>
+
+<!-- ODLICZANIE -->
+<div id="countdown">3</div>
+
+<!-- KONTENER GRY -->
+<div id="graArea">
+    <div id="ui">
+        <div>Odszyfrowywanie hasła...</div>
+        <div id="progressBar">
+            <div id="progress"></div>
+        </div>
+        <div id="percentText">0%</div>
+    </div>
+</div>
+
+<!-- EKRAN BRAWO -->
+<div id="brawo" class="screen" style="display:none;">
+    <h1 class="W">BRAWO!</h1>
+    <p>Udało ci się odszyfrować hasło, było ono bardziej oczywiste niż myślałem.<br>Teraz możesz bez problemu odnaleźć zaginiony prezent.<br><b>Hasło : </b>Mój brat Paweł to sigma</p>
+    <h2><b>Wpisz hasło poniżej:</b></h2>
+    <input type="text" id="hasloInput">
+    <button onclick="sprawdzHaslo()">GOTOWY?</button>
+</div>
+
+<!-- EKRAN PREZENT -->
+<div id="prezentScreen" class="screen" style="display:none;">
+    <div id="giftBox" style="font-size:120px; cursor:pointer;" onclick="otworzPrezent()">
+        🎁
+    </div>
+    <div id="steamKeyBox" style="display:none; margin-top:20px;">
+        <h2>🎉A więc wszystkiego najlepszego staruchu!🎉</h2>
+        <h2>Twój Steam Key(40zł):</h2>
+        <hr class="hr">
+        <h1 id="steamKey">ABCD1-EFGH2-IJKL3</h1>
+        <hr class="hr">
+        <button onclick="kopiujKod()">KOPIUJ KOD</button>
+    </div>
+</div>
+
+<script>
+
+/* ===== ZMIENNE ===== */
+let progress = 0;
+let lifetime = 1000; // czas życia ikony w ms
+let activePacket = null;
+
+/* ===== MENU I INSTRUKCJA ===== */
+function pokazInstrukcje(){
+    document.getElementById("menu").style.display = "none";
+    document.getElementById("instrukcja").style.display = "flex";
+}
+
+function rozpocznijOdliczanie(){
+    document.getElementById("instrukcja").style.display = "none";
+    countdown();
+}
+
+/* ===== ODLICZANIE 3 2 1 ===== */
+function countdown(){
+    const cd = document.getElementById("countdown");
+    cd.style.display="flex";
+    let liczba = 3;
+    cd.innerText = liczba;
+
+    let interval = setInterval(function(){
+        liczba--;
+        cd.innerText = liczba;
+
+        if(liczba===0){
+            clearInterval(interval);
+            cd.style.display="none";
+            startGry();
+        }
+    },1000);
+}
+
+/* ===== START GRY ===== */
+function startGry(){
+    document.getElementById("graArea").style.display="block";
+    spawnPacket();
+}
+
+/* ===== SPAWN ===== */
+function spawnPacket(){
+
+    if(progress>=100){
+        koniecGry();
+        return;
+    }
+
+
+    // usuń poprzednie
+    if(activePacket){
+        activePacket.remove();
+        activePacket = null;
+    }
+
+    const packet = document.createElement("div");
+    packet.className="packet";
+    packet.innerText="🔥";
+
+    const gameArea = document.getElementById("graArea");
+    const x = Math.random() * (gameArea.offsetWidth - 80);
+    const y = Math.random() * (gameArea.offsetHeight - 120);
+
+    packet.style.left = x + "px";
+    packet.style.top = y + "px";
+
+    gameArea.appendChild(packet);
+    activePacket = packet;
+
+    const timeout = setTimeout(function(){
+        spawnPacket(); // znika i od razu nowe
+    }, lifetime);
+
+    packet.onclick = function(){
+        // dźwięk
+        const sound = document.getElementById("clickSound");
+        sound.currentTime = 0; // żeby można było spamować
+        sound.play();
+
+        clearTimeout(timeout);
+        packet.remove();
+
+        progress += 10;
+        if(progress>100) progress=100;
+
+        document.getElementById("progress").style.width = progress+"%";
+        document.getElementById("percentText").innerText = progress+"%";
+
+        lifetime -= 10; // skraca czas życia
+
+        spawnPacket();
+    };
+}
+function koniecGry(){
+
+    const gra = document.getElementById("graArea");
+
+    // włącz trzęsienie
+    gra.classList.add("shake");
+
+    // po 2 sekundach zatrzymaj i pokaż ekran brawo
+    setTimeout(function(){
+
+        gra.classList.remove("shake");
+        gra.style.display = "none";
+
+        document.getElementById("brawo").style.display = "flex";
+
+    }, 2000);
+}
+
+function sprawdzHaslo(){
+
+    const wpisane = document.getElementById("hasloInput").value.trim();
+
+    if(wpisane === "Mój brat Paweł to sigma"){
+
+        document.getElementById("brawo").style.display = "none";
+        document.getElementById("prezentScreen").style.display = "flex";
+
+    } else {
+        alert("Źle wpisane hasło 😅");
+    }
+}
+
+
+function otworzPrezent(){
+
+    const gift = document.getElementById("giftBox");
+
+    // animacja obracania
+    gift.style.transition = "transform 0.6s";
+    gift.style.transform = "rotate(720deg) scale(1.5)";
+
+    setTimeout(function(){
+
+        gift.style.display = "none";
+        document.getElementById("steamKeyBox").style.display = "block";
+
+    }, 700);
+}
+
+function kopiujKod(){
+    const kod = document.getElementById("steamKey").innerText;
+    navigator.clipboard.writeText(kod);
+    alert("Skopiowano kod! 🎉");
+}
+
+</script>
+<audio id="clickSound" src="jump.wav"></audio>
+</body>
+</html>
