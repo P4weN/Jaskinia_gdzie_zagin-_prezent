@@ -7,7 +7,7 @@ body {
     text-align:center;
 }
 
-/* ===== EKRANY (ramka pixelart) ===== */
+/* ===== EKRANY (pixelartowa ramka) ===== */
 .screen {
     position: fixed;
     width: 100%;
@@ -19,7 +19,7 @@ body {
     align-items: center;
 
     background-image: url('3.png');
-    background-size: contain;          /* CAŁA RAMKA WIDOCZNA asdasdasdasdasdasdasdassd*/
+    background-size: contain;          /* CAŁA RAMKA WIDOCZNA */
     background-position: center center; /* WYŚRODKOWANA */
     background-repeat: no-repeat;
 
@@ -64,7 +64,7 @@ button {
     width: clamp(200px, 60vw, 400px);
 }
 
-/* ===== GRA (ramka pixelart) ===== */
+/* ===== GRA (pixelartowa ramka) ===== */
 #graArea {
     display:none;
     position:relative;
@@ -153,4 +153,3 @@ button {
 .hr {
     border: 1px solid #e46300;
 }
-
