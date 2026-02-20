@@ -19,7 +19,7 @@ body {
     align-items: center;
 
     background-image: url('3.png');
-    background-size: contain;          /* CAŁA RAMKA WIDOCZNA */
+    background-size: contain;          /* CAŁA RAMKA WIDOCZNA asdasdasdasdasdasdasdassd*/
     background-position: center center; /* WYŚRODKOWANA */
     background-repeat: no-repeat;
 
@@ -153,3 +153,4 @@ button {
 .hr {
     border: 1px solid #e46300;
 }
+
