@@ -32,7 +32,7 @@
 <!-- ODLICZANIE -->
 <div id="countdown">3</div>
 
-<!-- KONTENER GRY -->
+<!-- GRA -->
 <div id="graArea">
     <div id="ui">
         <div class="uiText">Odszyfrowywanie hasła...</div>
@@ -41,6 +41,9 @@
         </div>
         <div id="percentText">0%</div>
     </div>
+
+    <!-- WŁAŚCIWY OBSZAR GRY (wewnątrz ramki) -->
+    <div id="innerArea"></div>
 </div>
 
 <!-- EKRAN BRAWO -->
@@ -107,11 +110,11 @@ function countdown(){
 
 /* ===== START GRY ===== */
 function startGry(){
-    document.getElementById("graArea").style.display="block";
+    document.getElementById("graArea").style.display="flex";
     spawnPacket();
 }
 
-/* ===== SPAWN ===== */
+/* ===== SPAWN OGNIA – TYLKO W OBRĘBIE RAMKI ===== */
 function spawnPacket(){
 
     if(progress>=100){
@@ -128,18 +131,18 @@ function spawnPacket(){
     packet.className="packet";
     packet.innerText="🔥";
 
-    const gameArea = document.getElementById("graArea");
+    const area = document.getElementById("innerArea");
 
-    const areaWidth = gameArea.clientWidth;
-    const areaHeight = gameArea.clientHeight;
+    const areaWidth = area.clientWidth;
+    const areaHeight = area.clientHeight;
 
     const x = Math.random() * (areaWidth - 80);
-    const y = Math.random() * (areaHeight - 150);
+    const y = Math.random() * (areaHeight - 80);
 
     packet.style.left = x + "px";
     packet.style.top = y + "px";
 
-    gameArea.appendChild(packet);
+    area.appendChild(packet);
     activePacket = packet;
 
     const timeout = setTimeout(function(){
