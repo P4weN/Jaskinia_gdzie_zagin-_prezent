@@ -38,8 +38,6 @@
         </div>
         <div id="percentText">0%</div>
     </div>
-
-    <div id="innerArea"></div>
 </div>
 
 <!-- BRAWO -->
@@ -110,10 +108,10 @@ function startGry(){
     spawnPacket();
 }
 
-/* ===== SPAWN OGNIA ===== */
+/* ===== OGIEŃ NA CAŁYM EKRANIE ===== */
 function spawnPacket(){
 
-    if(progress>=100){
+    if(progress >= 100){
         koniecGry();
         return;
     }
@@ -124,26 +122,24 @@ function spawnPacket(){
     }
 
     const packet = document.createElement("div");
-    packet.className="packet";
-    packet.innerText="🔥";
+    packet.className = "packet";
+    packet.innerText = "🔥";
 
-    const area = innerArea;
+    const screenWidth = window.innerWidth;
+    const screenHeight = window.innerHeight;
 
-    const areaWidth = area.clientWidth;
-    const areaHeight = area.clientHeight;
-
-    const x = Math.random() * (areaWidth - 80);
-    const y = Math.random() * (areaHeight - 80);
+    const x = Math.random() * (screenWidth - 80);
+    const y = Math.random() * (screenHeight - 80);
 
     packet.style.left = x + "px";
     packet.style.top = y + "px";
 
-    area.appendChild(packet);
+    document.body.appendChild(packet);
     activePacket = packet;
 
     const timeout = setTimeout(spawnPacket, lifetime);
 
-    packet.onclick = ()=>{
+    packet.onclick = () => {
         clickSound.currentTime = 0;
         clickSound.play();
 
@@ -151,10 +147,10 @@ function spawnPacket(){
         packet.remove();
 
         progress += 10;
-        if(progress>100) progress=100;
+        if(progress > 100) progress = 100;
 
-        progressDiv.style.width = progress+"%";
-        percentText.innerText = progress+"%";
+        progressDiv.style.width = progress + "%";
+        percentText.innerText = progress + "%";
 
         lifetime -= 10;
 
@@ -204,7 +200,6 @@ const menu = document.getElementById("menu");
 const instrukcja = document.getElementById("instrukcja");
 const countdownDiv = document.getElementById("countdown");
 const graArea = document.getElementById("graArea");
-const innerArea = document.getElementById("innerArea");
 const progressDiv = document.getElementById("progress");
 const percentText = document.getElementById("percentText");
 const brawo = document.getElementById("brawo");
