@@ -7,19 +7,20 @@ body {
     text-align:center;
 }
 
-/* ===== EKRANY ===== */
+/* ===== EKRANY (ramka pixelart) ===== */
 .screen {
     position: fixed;
     width: 100%;
     height: 100dvh;
+
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 
     background-image: url('3.png');
-    background-size: cover;
-    background-position: center;
+    background-size: contain;          /* CAŁA RAMKA WIDOCZNA */
+    background-position: center center; /* WYŚRODKOWANA */
     background-repeat: no-repeat;
 
     padding: 20px;
@@ -32,6 +33,10 @@ body {
 
 p {
     font-size: clamp(16px, 4vw, 28px);
+}
+
+h1, h2 {
+    margin: 0 0 10px 0;
 }
 
 /* ===== PRZYCISKI ===== */
@@ -59,7 +64,7 @@ button {
     width: clamp(200px, 60vw, 400px);
 }
 
-/* ===== GRA ===== */
+/* ===== GRA (ramka pixelart) ===== */
 #graArea {
     display:none;
     position:relative;
@@ -67,8 +72,8 @@ button {
     height:100dvh;
 
     background-image: url('Cave.png');
-    background-size: cover;
-    background-position: center;
+    background-size: contain;          /* CAŁA RAMKA WIDOCZNA */
+    background-position: center center;
     background-repeat: no-repeat;
 }
 
@@ -116,9 +121,11 @@ button {
     position: fixed;
     width:100%;
     height:100dvh;
+
     display:none;
     justify-content:center;
     align-items:center;
+
     font-size: clamp(60px, 20vw, 150px);
     background: black;
 }
