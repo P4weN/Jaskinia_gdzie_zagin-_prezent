@@ -17,11 +17,9 @@ body {
     justify-content: center;
     align-items: center;
     background-image: url('3.png');
-    background-size: cover;      
+    background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
-    padding: 20px;               
-    box-sizing: border-box;       
 }
 
 /* ===== PRZYCISKI ===== */
@@ -50,26 +48,29 @@ button {
 /* ===== KONTENER GRY ===== */
 #graArea {
     display:none;
-    position:relative;
-    width:100%;
-    height:100%;
+    position: relative;
+    width: 100%;
+    height: 100vh;
     background-image: url('Cave.png');
-    background-size: contain;
-    background-position: top center;
+    background-size: cover;
+    background-position: center center;
     background-repeat: no-repeat;
+    padding-bottom: 10vh; /* zostawia miejsce na UI */
+    box-sizing: border-box;
 }
 
 /* ===== UI GRY ===== */
 #ui {
     position: absolute;
-    top: 75px;
+    top: 5vh;
     left: 50%;
     transform: translateX(-50%);
 }
 
 #progressBar {
-    width: 420px;
-    height: 22px;
+    width: 80vw; /* dopasowanie do szerokości ekranu */
+    max-width: 420px; /* limit dla dużych ekranów */
+    height: 4vh;     /* proporcjonalnie do wysokości ekranu */
     border: 2px solid #e46300;
     margin-top: 12px;
     overflow: hidden;
@@ -83,13 +84,14 @@ button {
 }
 
 #percentText {
-    margin-top: 8px;
+    margin-top: 1vh;
+    font-size: 4vw;
 }
 
 /* ===== ikona ===== */
 .packet {
     position: absolute;
-    font-size: 60px;
+    font-size: 10vw;
     cursor: pointer;
 }
 
@@ -126,5 +128,4 @@ p { margin:0; }
 
 .hr {
     border: 1px solid #e46300;
-
 }
