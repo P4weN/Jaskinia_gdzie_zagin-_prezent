@@ -33,6 +33,7 @@ body {
 
 p {
     font-size: clamp(16px, 4vw, 28px);
+    margin: 0;
 }
 
 h1, h2 {
@@ -153,3 +154,4 @@ button {
 .hr {
     border: 1px solid #e46300;
 }
+
